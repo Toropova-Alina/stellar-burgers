@@ -21,6 +21,7 @@ export const ProtectedRoute: FC<ProtectedRouteProps> = ({
   const user = useSelector(isAuthenticatedSelector);
   const isAuthChecked = useSelector(isAuthCheckedSelector);
   const location = useLocation();
+  const from = location.state?.from || '/';
 
   useEffect(() => {
     if (!isAuthChecked) {
@@ -37,7 +38,7 @@ export const ProtectedRoute: FC<ProtectedRouteProps> = ({
   }
 
   if (onlyUnAuth && user) {
-    return <Navigate to='/profile' replace />;
+    return <Navigate to={from} />;
   }
 
   return children;

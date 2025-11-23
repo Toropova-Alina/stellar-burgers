@@ -16,19 +16,18 @@ const constructorSlice = createSlice({
   name: 'burgerConstructor',
   initialState,
   reducers: {
-    addIngredient: (state, action: PayloadAction<TIngredient>) => {
-      const ingredient = action.payload;
-
-      const constructorIngredient: TConstructorIngredient = {
-        ...ingredient,
-        id: uuidv4()
-      };
-
-      if (ingredient.type === 'bun') {
-        state.bun = constructorIngredient;
-      } else {
-        state.ingredients.push(constructorIngredient);
-      }
+    addIngredient: {
+      reducer: (state, action: PayloadAction<TConstructorIngredient>) => {
+        const ingredient = action.payload;
+        if (ingredient.type === 'bun') {
+          state.bun = ingredient;
+        } else {
+          state.ingredients.push(ingredient);
+        }
+      },
+      prepare: (ingredient: TIngredient) => ({
+        payload: { ...ingredient, id: uuidv4() }
+      })
     },
 
     removeIngredient: (state, action: PayloadAction<string>) => {

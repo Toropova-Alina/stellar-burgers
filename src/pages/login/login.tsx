@@ -25,7 +25,7 @@ export const Login: FC = () => {
 
   useEffect(() => {
     if (user) {
-      const from = (location.state as any)?.from || { pathname: '/profile' };
+      const from = (location.state as any)?.from || { pathname: '/' };
       navigate(from, { replace: true });
     }
   }, [user, navigate, location]);

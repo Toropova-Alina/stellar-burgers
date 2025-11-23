@@ -13,12 +13,13 @@ import '../../index.css';
 import styles from './app.module.css';
 
 import { AppHeader, Modal, OrderInfo, IngredientDetails } from '@components';
-import { ModalOverlayUI } from '@ui';
 import { useEffect } from 'react';
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch } from '../../services/store';
 import { ProtectedRoute } from './protected';
 import { fetchIngredients } from '../../services/ingredients';
+import { fetchFeed } from '../../services/feed';
+import { getOrders } from '../../services/user';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -28,6 +29,8 @@ const App = () => {
 
   useEffect(() => {
     dispatch(fetchIngredients());
+    dispatch(fetchFeed());
+    dispatch(getOrders());
   }, [dispatch]);
 
   return (
@@ -86,29 +89,13 @@ const App = () => {
           }
         />
 
-        <Route
-          path='/feed/:number'
-          element={
-            <Modal title='Детали заказа' onClose={() => navigate(-1)}>
-              <OrderInfo />
-            </Modal>
-          }
-        />
-        <Route
-          path='/ingredients/:id'
-          element={
-            <Modal title='Детали ингредиента' onClose={() => navigate(-1)}>
-              <IngredientDetails />
-            </Modal>
-          }
-        />
+        <Route path='/feed/:number' element={<OrderInfo />} />
+        <Route path='/ingredients/:id' element={<IngredientDetails />} />
         <Route
           path='/profile/orders/:number'
           element={
             <ProtectedRoute>
-              <Modal title='Детали заказа' onClose={() => navigate(-1)}>
-                <OrderInfo />
-              </Modal>
+              <OrderInfo />
             </ProtectedRoute>
           }
         />
@@ -118,7 +105,6 @@ const App = () => {
 
       {background && (
         <>
-          <ModalOverlayUI onClick={() => navigate(-1)} />
           <Routes>
             <Route
               path='/feed/:number'
