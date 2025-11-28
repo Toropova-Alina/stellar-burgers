@@ -2,20 +2,31 @@ import { FC, useMemo } from 'react';
 import { Preloader } from '../ui/preloader';
 import { OrderInfoUI } from '../ui/order-info';
 import { TIngredient } from '@utils-types';
+import { useSelector } from '../../services/store';
+import { useParams, useLocation } from 'react-router-dom';
+import { feedOrdersSelect } from '../../services/feed';
+import { userOrdersSelector } from '../../services/user';
+import { ingredientsSelect } from '../../services/ingredients';
 
 export const OrderInfo: FC = () => {
   /** TODO: взять переменные orderData и ingredients из стора */
-  const orderData = {
-    createdAt: '',
-    ingredients: [],
-    _id: '',
-    status: '',
-    name: '',
-    updatedAt: 'string',
-    number: 0
-  };
+  const { number } = useParams<{ number: string }>();
+  const orderNum = Number(number);
+  const location = useLocation();
 
-  const ingredients: TIngredient[] = [];
+  const feedOrders = useSelector(feedOrdersSelect);
+  const profileOrders = useSelector(userOrdersSelector);
+  const allIngredients = useSelector(ingredientsSelect);
+
+  const orderData = useMemo(() => {
+    if (location.pathname.startsWith('/feed/')) {
+      return feedOrders.find((o) => o.number === orderNum);
+    } else if (location.pathname.startsWith('/profile/orders/')) {
+      return profileOrders.find((o) => o.number === orderNum);
+    } else return null;
+  }, [location.pathname, orderNum, feedOrders, profileOrders]);
+
+  const ingredients: TIngredient[] = allIngredients;
 
   /* Готовим данные для отображения */
   const orderInfo = useMemo(() => {
@@ -30,7 +41,9 @@ export const OrderInfo: FC = () => {
     const ingredientsInfo = orderData.ingredients.reduce(
       (acc: TIngredientsWithCount, item) => {
         if (!acc[item]) {
-          const ingredient = ingredients.find((ing) => ing._id === item);
+          const ingredient = ingredients.find(
+            (ing: TIngredient) => ing._id === item
+          );
           if (ingredient) {
             acc[item] = {
               ...ingredient,
