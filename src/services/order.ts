@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { orderBurgerApi } from '../utils/burger-api';
+import { orderBurgerApi, getOrderByNumberApi } from '../utils/burger-api';
 import { TOrder } from '@utils-types';
 
 export interface OrderState {
@@ -19,6 +19,20 @@ export const orderBurger = createAsyncThunk<
   string[],
   { rejectValue: string }
 >('order/orderBurger', orderBurgerApi);
+
+export const getOrderByNumber = createAsyncThunk<
+  TOrder,
+  number,
+  { rejectValue: string }
+>('order/getOrderByNumber', async (number, { rejectWithValue }) => {
+  try {
+    const response = await getOrderByNumberApi(number);
+    console.log(response.orders);
+    return response.orders[0];
+  } catch (err: any) {
+    return rejectWithValue(err?.message || 'Failed to fetch order');
+  }
+});
 
 const orderSlice = createSlice({
   name: 'order',
@@ -40,6 +54,18 @@ const orderSlice = createSlice({
         state.orderModalData = action.payload.order;
       })
       .addCase(orderBurger.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload || 'Unknown error';
+      })
+      .addCase(getOrderByNumber.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getOrderByNumber.fulfilled, (state, action) => {
+        state.loading = false;
+        state.orderModalData = action.payload;
+      })
+      .addCase(getOrderByNumber.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload || 'Unknown error';
       });

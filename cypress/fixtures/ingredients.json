@@ -1,0 +1,61 @@
+{
+  "success": true,
+  "data": [
+    {
+      "_id": "643d69a5c3f7b9001cfa093c",
+      "name": "Краторная булка N-200i",
+      "type": "bun",
+      "calories": 420,
+      "proteins": 80,
+      "fat": 24,
+      "carbohydrates": 53,
+      "image": "https://code.s3.yandex.net/react/code/bun-02.png",
+      "image_large": "https://code.s3.yandex.net/react/code/bun-02-large.png",
+      "image_mobile": "https://code.s3.yandex.net/react/code/bun-02-mobile.png",
+      "price": 1255,
+      "__v": 0
+    },
+    {
+      "_id": "643d69a5c3f7b9001cfa093d",
+      "name": "Флюоресцентная булка R2-D3",
+      "type": "bun",
+      "calories": 643,
+      "proteins": 44,
+      "fat": 26,
+      "carbohydrates": 85,
+      "image": "https://code.s3.yandex.net/react/code/bun-01.png",
+      "image_large": "https://code.s3.yandex.net/react/code/bun-01-large.png",
+      "image_mobile": "https://code.s3.yandex.net/react/code/bun-01-mobile.png",
+      "price": 988,
+      "__v": 0
+    },
+    {
+      "_id": "643d69a5c3f7b9001cfa0941",
+      "name": "Биокотлета из марсианской Магнолии",
+      "type": "main",
+      "calories": 4242,
+      "proteins": 420,
+      "fat": 142,
+      "carbohydrates": 242,
+      "image": "https://code.s3.yandex.net/react/meat-01.png",
+      "image_large": "https://code.s3.yandex.net/react/code/meat-01-large.png",
+      "image_mobile": "https://code.s3.yandex.net/react/code/meat-01-mobile.png",
+      "price": 424,
+      "__v": 0
+    },
+    {
+      "_id": "643d69a5c3f7b9001cfa0942",
+      "name": "Соус Spicy-X",
+      "type": "sauce",
+      "calories": 30,
+      "proteins": 30,
+      "fat": 20,
+      "carbohydrates": 40,
+      "image": "https://code.s3.yandex.net/react/sauce-02.png",
+      "image_large": "https://code.s3.yandex.net/react/code/sauce-02-large.png",
+      "image_mobile": "https://code.s3.yandex.net/react/code/sauce-02-mobile.png",
+      "price": 90,
+      "__v": 0
+    }
+  ]
+}
