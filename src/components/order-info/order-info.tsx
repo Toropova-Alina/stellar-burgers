@@ -1,15 +1,17 @@
-import { FC, useMemo } from 'react';
+import { FC, useMemo, useEffect } from 'react';
 import { Preloader } from '../ui/preloader';
 import { OrderInfoUI } from '../ui/order-info';
 import { TIngredient } from '@utils-types';
-import { useSelector } from '../../services/store';
+import { useSelector, useDispatch } from '../../services/store';
 import { useParams, useLocation } from 'react-router-dom';
 import { feedOrdersSelect } from '../../services/feed';
 import { userOrdersSelector } from '../../services/user';
 import { ingredientsSelect } from '../../services/ingredients';
+import { getOrderByNumber } from '../../services/order';
 
 export const OrderInfo: FC = () => {
   /** TODO: взять переменные orderData и ingredients из стора */
+  const dispatch = useDispatch();
   const { number } = useParams<{ number: string }>();
   const orderNum = Number(number);
   const location = useLocation();
@@ -25,6 +27,12 @@ export const OrderInfo: FC = () => {
       return profileOrders.find((o) => o.number === orderNum);
     } else return null;
   }, [location.pathname, orderNum, feedOrders, profileOrders]);
+
+  useEffect(() => {
+    if (!orderData) {
+      dispatch(getOrderByNumber(+orderNum));
+    }
+  }, [dispatch, orderData, orderNum]);
 
   const ingredients: TIngredient[] = allIngredients;
 

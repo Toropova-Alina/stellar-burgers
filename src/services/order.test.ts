@@ -1,4 +1,4 @@
-import orderSlice, { orderBurger, OrderState } from './order';
+import orderSlice, { orderBurger, OrderState, getOrderByNumber } from './order';
 import { TOrder } from '@utils-types';
 
 const expectedOrder: TOrder = {
@@ -40,6 +40,34 @@ describe('order test', () => {
   test('orderBurger/rejected', () => {
     const state = orderSlice(initialState, {
       type: orderBurger.rejected.type,
+      payload: 'Order error'
+    });
+
+    expect(state.loading).toBe(false);
+    expect(state.error).toBe('Order error');
+  });
+
+  test('getOrderByNumber/pending', () => {
+    const state = orderSlice(initialState, {
+      type: getOrderByNumber.pending.type
+    });
+    expect(state.loading).toBe(true);
+    expect(state.error).toBeNull();
+  });
+
+  test('getOrderByNumber/fulfilled', () => {
+    const state = orderSlice(initialState, {
+      type: getOrderByNumber.fulfilled.type,
+      payload: expectedOrder
+    });
+
+    expect(state.loading).toBe(false);
+    expect(state.orderModalData).toEqual(expectedOrder);
+  });
+
+  test('getOrderByNumber/rejected', () => {
+    const state = orderSlice(initialState, {
+      type: getOrderByNumber.rejected.type,
       payload: 'Order error'
     });
 
