@@ -10,7 +10,7 @@ export const ModalUI: FC<TModalUIProps> = memo(
   ({ title, onClose, children }) => (
     <>
       <div className={styles.modal}>
-        <div className={styles.header}>
+        <div className={styles.header} data-cy='modal'>
           <h3 className={`${styles.title} text text_type_main-large`}>
             {title}
           </h3>

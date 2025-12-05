@@ -19,7 +19,7 @@ import { useDispatch } from '../../services/store';
 import { ProtectedRoute } from './protected';
 import { fetchIngredients } from '../../services/ingredients';
 import { fetchFeed } from '../../services/feed';
-import { getOrders } from '../../services/user';
+import { getOrders, checkUser } from '../../services/user';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -31,6 +31,7 @@ const App = () => {
     dispatch(fetchIngredients());
     dispatch(fetchFeed());
     dispatch(getOrders());
+    dispatch(checkUser());
   }, [dispatch]);
 
   return (
